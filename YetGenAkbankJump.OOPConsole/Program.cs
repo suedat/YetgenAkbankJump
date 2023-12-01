@@ -4,16 +4,25 @@ var passwordGenerator = new PasswordGenerator();
 
 Console.WriteLine("Lütfen şifre için istediğiniz karakter sayısını giriniz.");
 
-var response = Console.ReadLine();
+var passwordLenght = Convert.ToInt32(Console.ReadLine());
 
-if (string.IsNullOrEmpty(response))
-{
-    Console.WriteLine("God damn it son!");
+Console.WriteLine("Şifreniz sayıları içersin mi?");
 
-    return 0;
-}
+var includeNumbers = Console.ReadLine() == "evet";
 
-var password = passwordGenerator.Generate(Convert.ToInt32(response));
+Console.WriteLine("Şifreniz küçük karakterleri içersin mi?");
+
+var includeLowerCase = Console.ReadLine() == "evet";
+
+Console.WriteLine("Şifreniz büyük karakterleri içersin mi?");
+
+var includeUpperCase = Console.ReadLine() == "evet";
+
+Console.WriteLine("Şifreniz özel  karakterleri içersin mi?");
+
+var includeSpecialChars = Console.ReadLine() == "evet";
+
+var password = passwordGenerator.Generate(passwordLenght, includeNumbers, includeLowerCase, includeUpperCase, includeSpecialChars);
 
 Console.WriteLine($"Şifreniz: {password}");
  

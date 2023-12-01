@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+
 namespace YetGenAkbankJump.OOPConsole.Utilities
 {
 	public class PasswordGenerator
@@ -6,40 +8,46 @@ namespace YetGenAkbankJump.OOPConsole.Utilities
 		private readonly Random _random;
 		//written like _random because this area private & readonly
 		//readonly -> bir kere atıyoruz bir daha değiştiremiyoruz
+		private const string Numbers = "0123456789";
+        private const string SpecialChars = "!@#$%^&*()";
+        private const string LowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
+        private const string UpperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string Full = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()";
 
-		public PasswordGenerator()
+        public PasswordGenerator()
 		{
 			_random = new Random();
 		}
 
-		public string Generate(int passwordLenght)
+		public string Generate(int passwordLenght, bool includeNumbers, bool includeLowerCase, bool includeUpperCase, bool includeSpecialChars)
 		{
-			string password = string.Empty;
+			var charsBuilder = new StringBuilder();
 
-			for (int i = 0; i < passwordLenght; i++)
+			if (includeNumbers)
+				charsBuilder.Append(Numbers);
+
+			if (includeLowerCase)
+				charsBuilder.Append(LowerCaseChars);
+
+            if (includeUpperCase)
+                charsBuilder.Append(UpperCaseChars);
+
+            if (includeSpecialChars)
+                charsBuilder.Append(SpecialChars);
+
+			var acceptedChars = charsBuilder.ToString();
+
+			var passwordBuilder = new StringBuilder();
+
+            for (int i = 0; i < passwordLenght; i++)
 			{
-				var randomNumber = _random.Next(0, 10000);
+				var randomIndex = _random.Next(0, acceptedChars.Length);
 
-				if(randomNumber % 2 == 0)
-				{
-                password += _random.Next(0, 10).ToString();
-				}
-				else
-				{
-					var randomNumberForChars = _random.Next(0, 10000);
-
-					if(randomNumberForChars % 2 == 0)
-					{
-						password += Convert.ToChar(_random.Next(65, 91));
-
-					}
-					else
-					{
-						password += Convert.ToChar(_random.Next(97,123));
-					}
-				}
+				passwordBuilder.Append(acceptedChars[randomIndex]);
+				
 			}
-			return password;
+			return passwordBuilder.ToString();
+			//stringBuilder is a class so added ToString()
 		}
 	}
 }
