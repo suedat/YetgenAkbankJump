@@ -4,7 +4,7 @@ using YetGenAkbankJump.OOPConsole.Enums;
 
 namespace YetGenAkbankJump.OOPConsole.Entities
 {
-	public class AccessControlLog:EntityBase<>
+	public class AccessControlLog : EntityBase<string>
 	{
 	
 		public long PersonId { get; set; }
